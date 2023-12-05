@@ -94,9 +94,12 @@ class EyeDrop extends InheritedWidget {
 
     data.touchable = touchable;
 
+    /// Update the offset to be relative to the center of the grid.
+    final updatedOffset = offset - const Offset(0, _gridSize / 2);
+
     if (data.snapshot != null) {
-      data.hoverColor = getPixelColor(data.snapshot!, offset);
-      data.hoverColors = getPixelColors(data.snapshot!, offset);
+      data.hoverColor = getPixelColor(data.snapshot!, updatedOffset);
+      data.hoverColors = getPixelColors(data.snapshot!, updatedOffset);
     }
 
     if (data.onColorChanged != null) {
@@ -109,6 +112,7 @@ class EyeDrop extends InheritedWidget {
     ValueChanged<Color> onColorSelected,
     ValueChanged<Color>? onColorChanged,
   ) async {
+    /// captures the contents of the widget's paint boundary
     final renderer =
         captureKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
 
@@ -117,6 +121,7 @@ class EyeDrop extends InheritedWidget {
     data.onColorSelected = onColorSelected;
     data.onColorChanged = onColorChanged;
 
+    /// converts the paint boundary of the specified widget into an image
     data.snapshot = await repaintBoundaryToImage(renderer);
 
     if (data.snapshot == null) return null;
