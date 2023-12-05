@@ -145,7 +145,7 @@ class EyeDrop extends InheritedWidget {
               height: 32,
               width: 80,
               child: CustomTabButtons(
-                title: 'Done',
+                title: 'On Done',
                 onTap: () {
                   _onPointerUp(
                     Offset(
